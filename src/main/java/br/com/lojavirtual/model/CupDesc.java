@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,14 +27,16 @@ public class CupDesc implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cup_desc")
 	private Long id;
 	
+	@Column(nullable = false)
 	private String codDesc;
 	
 	private BigDecimal valorRealDesc;
 	
 	private BigDecimal valorPorcenDesc;
 	
-	@Temporal(TemporalType.DATE)
-	private Date dataValidadeCupom;
+	@Column(nullable = false)
+	@Temporal(TemporalType.DATE) 
+	private Date dataValidadeCupom;  
 
 	public Long getId() {
 		return id;

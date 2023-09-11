@@ -3,6 +3,7 @@ package br.com.lojavirtual.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -25,6 +26,7 @@ public class ItemVendaLoja implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_item_venda_loja")
 	private Long id;
 	
+	@Column(nullable = false)
 	private Double quantidade;
 	
 	@ManyToOne 
@@ -35,7 +37,7 @@ public class ItemVendaLoja implements Serializable{
 	@ManyToOne 
 	@JoinColumn(name = "venda_compraLoja_virtu_id", nullable = false, 
 	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compraLoja_virtu_fk"))
-	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
+	private VendaCompraLojaVirtual vendaCompraLojaVirtual; 
 
 	public Long getId() {
 		return id;

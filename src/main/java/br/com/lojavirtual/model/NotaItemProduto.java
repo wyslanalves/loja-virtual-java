@@ -35,10 +35,10 @@ private static final long serialVersionUID = 1L;
 	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "nota_fiscal_compra_fk"))
 	private NotaFiscalCompra notaFiscalCompra;
 	
-	@ManyToOne
+	@ManyToOne 
 	@JoinColumn(name = "produto_id", nullable = false, 
 	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "produto_fk"))
-	private Produto produto;
+	private Produto produto; 
 
 	public Long getId() {
 		return id;

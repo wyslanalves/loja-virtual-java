@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import br.com.lojavirtual.enums.TipoEndereco;
+import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,33 +23,44 @@ import jakarta.persistence.Table;
 @SequenceGenerator(name = "seq_endereco", sequenceName = "seq_endereco", allocationSize = 1, initialValue = 1)
 public class Endereco implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_endereco")
 	private Long id;
+
+	@Column(nullable = false)
+	private String ruaLogra;
 	
-	private String rua;
+	@Column(nullable = false)
 	private String cep;
+	
+	@Column(nullable = false)
 	private String numero;
+	
 	private String complemento;
+	
+	@Column(nullable = false)
 	private String bairro;
+	
+	@Column(nullable = false)
 	private String uf;
+	
+	@Column(nullable = false)
 	private String cidade;
-	
+
 	@ManyToOne(targetEntity = Pessoa.class) // muitos endereco para uma pessoa
-	@JoinColumn(name = "pessoa_id", nullable = false, 
-	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
+	@JoinColumn(name = "pessoa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "pessoa_fk"))
 	private Pessoa pessoa;
-	
+
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private TipoEndereco tipoEndereco;
-	
+
 	public void setTipoEndereco(TipoEndereco tipoEndereco) {
 		this.tipoEndereco = tipoEndereco;
 	}
-	
+
 	public TipoEndereco getTipoEndereco() {
 		return tipoEndereco;
 	}
@@ -61,12 +73,12 @@ public class Endereco implements Serializable {
 		this.id = id;
 	}
 
-	public String getRua() {
-		return rua;
+	public String getRuaLogra() {
+		return ruaLogra;
 	}
 
-	public void setRua(String rua) {
-		this.rua = rua;
+	public void setRuaLogra(String ruaLogra) {
+		this.ruaLogra = ruaLogra;
 	}
 
 	public String getCep() {
@@ -141,6 +153,6 @@ public class Endereco implements Serializable {
 		Endereco other = (Endereco) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
 }
+

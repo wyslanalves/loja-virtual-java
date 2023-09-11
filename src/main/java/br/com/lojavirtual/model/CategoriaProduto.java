@@ -3,15 +3,13 @@ package br.com.lojavirtual.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
-
-
 
 @Entity
 @Table(name = "categoria_produto")
@@ -25,7 +23,8 @@ public class CategoriaProduto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_categoria_produto")
 	private Long id;
 	
-	private String nomeDescricao;
+	@Column(name = "nome_desc", nullable = false)
+	private String nomeDesc;
 
 	public Long getId() {
 		return id;
@@ -35,12 +34,14 @@ public class CategoriaProduto implements Serializable{
 		this.id = id;
 	}
 
-	public String getNomeDescricao() {
-		return nomeDescricao;
+	
+
+	public String getNomeDesc() {
+		return nomeDesc;
 	}
 
-	public void setNomeDescricao(String nomeDescricao) {
-		this.nomeDescricao = nomeDescricao;
+	public void setNomeDesc(String nomeDesc) {
+		this.nomeDesc = nomeDesc;
 	}
 
 	@Override
