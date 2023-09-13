@@ -30,7 +30,7 @@ public class AvaliacaoProduto implements Serializable{
 	@Column(nullable = false)
 	private Integer nota;
 	
-	@Column(nullable = false)
+	@Column(nullable = false) 
 	private String descricao;
 	
 	@ManyToOne(targetEntity = Pessoa.class)
