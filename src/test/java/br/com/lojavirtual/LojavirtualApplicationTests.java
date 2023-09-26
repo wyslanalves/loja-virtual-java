@@ -7,9 +7,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
@@ -24,6 +24,7 @@ import br.com.lojavirtual.controller.AcessoController;
 import br.com.lojavirtual.model.Acesso;
 import br.com.lojavirtual.repository.AcessoRepository;
 
+@Profile("test")
 @SpringBootTest(classes = LojavirtualApplication.class)
 class LojavirtualApplicationTests {
 
@@ -184,34 +185,40 @@ class LojavirtualApplicationTests {
 	 }
 	
 	@Test
-	 public void testRestApiObterAcessoDesc() throws JsonProcessingException, Exception {
-		 DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(wac);
-		 MockMvc mockMvc = builder.build();
-		 
-		 Acesso acesso = new Acesso();
-		 acesso.setDescricao("ROLE_TESTE_OBTER_LIST");
-		 
-		 acesso = acessoRepository.save(acesso);
-		 
-		 ObjectMapper objectMapper = new ObjectMapper();
-		 
-		 ResultActions retornoApi = mockMvc
-				 					.perform(MockMvcRequestBuilders.get("/buscarPorDesc/OBTER_LIST" + acesso.getId())
-				 					.content(objectMapper.writeValueAsString(acesso))
-				 					.accept(MediaType.APPLICATION_JSON)
-				 					.contentType(MediaType.APPLICATION_JSON));
-		 
-		 assertEquals(200, retornoApi.andReturn().getResponse().getStatus());
-		 
-		 List<Acesso> retornoApiList = objectMapper
-				 			           .readValue(retornoApi.andReturn().getResponse().getContentAsString(), 
-				 			           new TypeReference<List<Acesso>>(){});
-		 
-		 assertEquals(1, retornoApiList.size());
-		 assertEquals(acesso.getDescricao(), retornoApiList.get(0).getDescricao());
-		 
-		 acessoRepository.deleteById(acesso.getId());
-		 
-	 }
+	public void testRestApiObterAcessoDesc() throws JsonProcessingException, Exception {
+		
+	    DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
+	    MockMvc mockMvc = builder.build();
+	    
+	    Acesso acesso = new Acesso();
+	    
+	    acesso.setDescricao("ROLE_TESTE_OBTER_LIST");
+	    
+	    acesso = acessoRepository.save(acesso);
+	    
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    
+	    ResultActions retornoApi = mockMvc
+	    						 .perform(MockMvcRequestBuilders.get("/buscarPorDesc/OBTER_LIST")
+	    						 .content(objectMapper.writeValueAsString(acesso))
+	    						 .accept(MediaType.APPLICATION_JSON)
+	    						 .contentType(MediaType.APPLICATION_JSON));
+	    
+	    assertEquals(200, retornoApi.andReturn().getResponse().getStatus());
+	    
+	    
+	    List<Acesso> retornoApiList = objectMapper.
+	    							     readValue(retornoApi.andReturn()
+	    									.getResponse().getContentAsString(),
+	    									 new TypeReference<List<Acesso>> () {});
+
+	    assertEquals(1, retornoApiList.size());
+	    
+	    assertEquals(acesso.getDescricao(), retornoApiList.get(0).getDescricao());
+	    
+	    
+	    acessoRepository.deleteById(acesso.getId());
+	    
+	}
 	
 }
